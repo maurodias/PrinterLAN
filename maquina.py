@@ -26,6 +26,10 @@ class Maquina(object):
         for maquina in Maquina.maquinas:
             if cod == maquina.obter_codigo():
                 raise ValueError
+    
+    def _validar_valor_positivo(self, valor):
+        if valor <= 0:
+            raise ValueError
             
     def destruir_maquina(self):
         Maquina.destruir_maquina(self)
