@@ -32,7 +32,7 @@ class Maquina(object):
             raise ValueError
             
     def destruir_maquina(self):
-        Maquina.destruir(self)
+        Maquina.destruir_maquina(self)
         
     @classmethod
     def armazenar(cls, maquina):

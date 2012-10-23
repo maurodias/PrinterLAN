@@ -43,7 +43,7 @@ class testeServidor(unittest.TestCase):
         servidor.impressoras |should| equal_to([])
 #        servidor.remover_impressora()
 #        should raise error, implemetar
-        servidor.destruir_maquina() 
+        
          
 if __name__ == "__main__":
     unittest.main()

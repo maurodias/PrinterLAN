@@ -13,6 +13,7 @@ class testeImpressora(unittest.TestCase):
         impressora = Impressora(10,'Printer',40)
         impressora.velocidade |should| equal_to(40)
         impressora.destruir_maquina()        
+#       destruir maquina n ta funcionando 
         
     def test_adicionar_host(self):        
         server = Servidor(19,'IBM',3286,16,4444,6666)
