@@ -10,7 +10,7 @@ class testeMaquina(unittest.TestCase):
     def test_obter_codigo(self):
         maquina = Maquina(1,'PC')
         maquina.codigo |should| equal_to(1)
-        Maquina.destruir_maquina(maquina)
+        maquina.destruir_maquina()
         
     def test_obter_descricao(self):
         maquina = Maquina(1,'PC')

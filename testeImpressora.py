@@ -23,15 +23,32 @@ class testeImpressora(unittest.TestCase):
         impressora2 = Impressora(21,'Printer2',40)
         impressora2.adicionar_host(server)
         (server.verificar_disponibilidade) |should_not| throw(ValueError)        
+        
         impressora3 = Impressora(22, 'Printer3',40)
+        impressora3.adicionar_host(impressora2)
+        impressora3.host |should_not| equal_to(impressora2)
+        
         impressora3.adicionar_host(server)
+        impressora3.host |should| equal_to(server)
         (server.verificar_disponibilidade) |should| throw(ValueError)
            
         impressora.destruir_maquina()   
         impressora2.destruir_maquina()  
         impressora3.destruir_maquina()  
         server.destruir_maquina() 
-            
+    
+    def test_remover_host(self):
+        server = Servidor(19,'IBM',3286,16,4444,6666)
+        impressora = Impressora(20,'Printer',40)
+        impressora.remover_host()
+        impressora.host |should| equal_to("Remova a conexão com atual servidor")           
+        impressora.adicionar_host(server)
+        impressora.host |should| equal_to(server)           
+        impressora.remover_host()
+        impressora.host |should| equal_to(None)           
+        server.destruir_maquina()
+        impressora.destruir_maquina()
+    
     def test_alterar_impressora(self):
         impressora = Impressora(5,'Printer',40)
         (impressora._validar_valor_positivo,1) |should_not| throw(ValueError)

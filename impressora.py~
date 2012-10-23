@@ -16,14 +16,14 @@ class Impressora(Maquina):
     
     def adicionar_host(self,host):
         if self._host == None:
-            self._validar_host(host)
-            self._host = host
-            self._host._impressoras.append(self)
+            if self._validar_host(host):
+                host._impressoras.append(self)
+                self._host = host
         else:
             return "Remova a conexão com atual servidor"
 
     def remover_host(self):
-        if self._host:
+        if self._host != None:
             self._host._impressoras.remove(self)
             self._host = None        
             
@@ -34,10 +34,11 @@ class Impressora(Maquina):
         return self._host
    
     def _validar_host(self,host):
-        if isinstance(host,Servidor):
+        if isinstance(host, Servidor):
             if host.verificar_disponibilidade():
                 return True
-
+        return False
+            
     def destruir_maquina(self):
         self.remover_host()
         Maquina.destruir(self)        
