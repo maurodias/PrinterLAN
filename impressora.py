@@ -15,17 +15,18 @@ class Impressora(Maquina):
         self._velocidade = velocidade
     
     def adicionar_host(self,host):
-        if self._host == None:
-            if self._validar_host(host):
-                self._host = host
-                self._host._impressoras.append(self)
+        if self._host == None and self._validar_host(host):
+            self._host = host
+            self._host._impressoras.append(self)
         else:
-            return "Remova a conexão com atual servidor"
+            raise ValueError
 
     def remover_host(self):
         if self._host != None:
-            self._host._impressoras.remove(self)
-            self._host = None        
+            self._host._impressoras.pop(0)
+            self._host = None     
+        else:
+            raise ValueError   
             
     def obter_velocidade(self):
         return self._velocidade
@@ -34,13 +35,13 @@ class Impressora(Maquina):
         return self._host
    
     def _validar_host(self,host):
-        if isinstance(host, Servidor):
-            if host.verificar_disponibilidade():
-                return True
+        if isinstance(host, Servidor) and host.verificar_disponibilidade():
+            return True
         return False
             
     def destruir_maquina(self):
-        self.remover_host()
+        if self.host != None:
+            self.remover_host()
         Maquina.destruir(self)        
 
     velocidade = property(obter_velocidade, alterar_velocidade)
