@@ -12,11 +12,13 @@ class testeImpressora(unittest.TestCase):
     def test_obter_impressora(self):
         impressora = Impressora(10,'Printer',40)
         impressora.velocidade |should| equal_to(40)
+        impressora.host |should| equal_to(None)
         impressora.destruir_maquina()        
         
     def test_adicionar_host(self):        
         server = Servidor(19,'IBM',3286,16,4444,6666)
         impressora = Impressora(20,'Printer',40)
+        
         impressora.adicionar_host(server)
         impressora.host |should| equal_to(server)
 
@@ -25,8 +27,7 @@ class testeImpressora(unittest.TestCase):
         (server.verificar_disponibilidade) |should_not| throw(ValueError)        
         
         impressora3 = Impressora(22, 'Printer3',40)
-        impressora3.adicionar_host(impressora2)
-        impressora3.host |should_not| equal_to(impressora2)
+        (impressora3.adicionar_host,impressora2) |should| throw(ValueError)
         
         impressora3.adicionar_host(server)
         impressora3.host |should| equal_to(server)
@@ -40,15 +41,19 @@ class testeImpressora(unittest.TestCase):
     def test_remover_host(self):
         server = Servidor(19,'IBM',3286,16,4444,6666)
         impressora = Impressora(20,'Printer',40)
-        impressora.remover_host()
-        impressora.host |should| equal_to("Remova a conexão com atual servidor")           
+        
+        impressora.host |should| equal_to(None)
+        (impressora.remover_host) |should| throw(ValueError)
+        
         impressora.adicionar_host(server)
-        impressora.host |should| equal_to(server)           
+        impressora.host |should| equal_to(server) 
         impressora.remover_host()
         impressora.host |should| equal_to(None)           
-        server.destruir_maquina()
+        
+        
         impressora.destruir_maquina()
-    
+        server.destruir_maquina()
+        
     def test_alterar_impressora(self):
         impressora = Impressora(5,'Printer',40)
         (impressora._validar_valor_positivo,1) |should_not| throw(ValueError)
