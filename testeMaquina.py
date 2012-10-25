@@ -23,12 +23,13 @@ class testeMaquina(unittest.TestCase):
         maquina2.codigo = 0    
         maquina2.codigo |should| equal_to(0)    
         (maquina2._verificar_identidade,2) |should_not| throw(ValueError)
-        Maquina.destruir_maquina(maquina2)
+        maquina2.destruir_maquina()
         
     def test_alterar_descricao(self):
         maquina2 = Maquina(2,'PC2')
         maquina2.descricao = "Lenovo"
         maquina2.descricao |should| equal_to('Lenovo')
+        maquina2.destruir_maquina()
         
 if __name__ == "__main__":
     unittest.main()

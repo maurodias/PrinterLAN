@@ -24,7 +24,9 @@ class Maquina(object):
         
     def _verificar_identidade(self, cod):
         for maquina in Maquina.maquinas:
-            if cod == maquina.obter_codigo():
+            if cod == maquina.codigo:
+                print maquina.descricao , type(maquina) , 'ja existe o codigo', cod
+                
                 raise ValueError
     
     def _validar_valor_positivo(self, valor):

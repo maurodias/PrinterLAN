@@ -24,7 +24,9 @@ class Maquina(object):
         
     def _verificar_identidade(self, cod):
         for maquina in Maquina.maquinas:
-            if cod == maquina.obter_codigo():
+            if cod == maquina.codigo:
+                print maquina.descricao , type(maquina) , 'ja existe'
+                
                 raise ValueError
     
     def _validar_valor_positivo(self, valor):
@@ -32,7 +34,7 @@ class Maquina(object):
             raise ValueError
             
     def destruir_maquina(self):
-        Maquina.destruir_maquina(self)
+        Maquina.destruir(self)
         
     @classmethod
     def armazenar(cls, maquina):

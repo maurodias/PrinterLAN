@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 from maquina import Maquina
 from computador import Computador
+from impressora import Impressora
 
 class Servidor(Computador):
  
@@ -32,20 +33,36 @@ class Servidor(Computador):
         return self._impressoras
         
     def adicionar_impressora(self, impressora):
-        if len(self.impressoras) < 3:
-#            self._validar_impressora(impressora)
-            self.impressoras.append(impressora)
+        self._verificar_disponibilidade()
+        self._validar_se_impressora(impressora)
+        impressora.adicionar_host(self)
+        self.impressoras.append(impressora)
     
     def remover_impressora(self, impressora):
         if impressora in self.impressoras:
+            impressora.remover_host()
             self.impressoras.remove(impressora)
+        else:
+            raise ValueError
     
-    
-    def verificar_disponibilidade(self):
+    def _verificar_disponibilidade(self):
         if len(self._impressoras) >= 3 :
             raise ValueError
-        return True 
             
+    def _validar_se_impressora(self,impressora):
+        if not isinstance(impressora, Impressora):
+            raise ValueError
+
+    def desconectar_todas_impressoras(self):
+        for impressora in self._impressoras:
+            impressora.remover_host() 
+        self._impressoras=[]   
+    
+    def destruir_maquina(self):
+        if len(self._impressoras) > 0:
+            raise ValueError
+        Maquina.destruir(self)        
+
     impressoras = property(obter_impressoras)
     tamanho_max_buffer = property(obter_tamanho_max_buffer, alterar_tamanho_max_buffer)
     quantidade_max_buffer = property(obter_quantidade_max_buffer, alterar_quantidade_max_buffer)

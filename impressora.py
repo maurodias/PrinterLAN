@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 from maquina import Maquina
-from servidor import Servidor
 
 class Impressora(Maquina):
     def __init__(self, codigo_patrimonio, descricao ,velocidade):
@@ -15,18 +14,23 @@ class Impressora(Maquina):
         self._velocidade = velocidade
     
     def adicionar_host(self,host):
-        if self._host == None and self._validar_host(host):
+        if self._host == None:
             self._host = host
-            self._host._impressoras.append(self)
         else:
             raise ValueError
 
+#    def adicionar_host(self,host):
+#        self._tem_host == None
+#        self._host = host
+#        self._host._impressoras.append(self)
+
+#    def _tem_host(self):
+#        if self.host != None:
+#            raise ValueError
+
+
     def remover_host(self):
-        if self._host != None:
-            self._host._impressoras.pop(0)
-            self._host = None     
-        else:
-            raise ValueError   
+        self._host = None     
             
     def obter_velocidade(self):
         return self._velocidade
@@ -34,14 +38,9 @@ class Impressora(Maquina):
     def obter_host(self):
         return self._host
    
-    def _validar_host(self,host):
-        if isinstance(host, Servidor) and host.verificar_disponibilidade():
-            return True
-        return False
-            
     def destruir_maquina(self):
         if self.host != None:
-            self.remover_host()
+            self.host.remover_impressora(self)
         Maquina.destruir(self)        
 
     velocidade = property(obter_velocidade, alterar_velocidade)
