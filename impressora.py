@@ -18,7 +18,7 @@ class Impressora(Maquina):
     
     def imprimir(self):
         if self._fila != []:
-            impressao_atual = self._fila.pop(-1)
+            impressao_atual = self._fila.pop(0)
             print 30*'-', 'IMPRIMINDO',30*'-'
             print 'ARQUIVO:', impressao_atual.arquivo
             print 'USUARIO:', impressao_atual.usuario.nome
@@ -31,7 +31,7 @@ class Impressora(Maquina):
              
     def remover_impressao_fila(self, impressao=None):
         if impressao == None and self._fila != []:
-            self._fila.pop(-1).remover_impressao()
+            self._fila.pop(0).remover_impressao()
         elif impressao in self._fila:
             impressao.remover_impressao()
             self._fila.remove(impressao)
@@ -74,8 +74,7 @@ class Impressora(Maquina):
     def destruir_maquina(self):
         if self.host != None:
             self.host.remover_impressora(self)
-        if self.fila != []:
-            raise ValueError
+        self.remover_todas_fila_impressao()
         Impressora.destruir(self)
         Maquina.destruir(self) 
     

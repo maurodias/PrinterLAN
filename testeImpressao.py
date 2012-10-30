@@ -8,36 +8,57 @@ from servidor import Servidor
 from impressora import Impressora
 from impressao import Impressao
 from usuario import Usuario
+from estacao import Estacao
 
 class testeImpressao(unittest.TestCase):
 
     def test_obter_impressao(self):
+        estacao = Estacao(1,'DELL',4,512,'lab-8')
+        servidor = Servidor(2,'PC',512,4088,128,10000)
+        impressora = Impressora(20,'lASERjET HP',40)
         usuario = Usuario('mauro','123456')
-        impressora = Impressora(20,'Printer',40)
-        impressao = Impressao('arquivo1.txt',impressora, usuario,40)
+        
+        usuario.logar(estacao)
+        servidor.adicionar_impressora(impressora)
+        
+        impressao = Impressao('arquivo1.txt',impressora, usuario)
        
         (impressao._validar_valor_positivo,1) |should_not| throw(ValueError)
         (impressao._validar_valor_positivo,0) |should| throw(ValueError)
 
-        impressao.copias |should| equal_to(40)
+        impressao.copias |should| equal_to(1)
         impressao.arquivo |should| equal_to('arquivo1.txt')
         impressao.usuario |should| equal_to(usuario)
 
-        impressora.remover_impressao_fila()        
+        impressora.imprimir()
         usuario.apagar_usuario()
-        impressora.destruir_maquina()
+        impressora.destruir_maquina()      
+        estacao.destruir_maquina()        
+        servidor.destruir_maquina()
         
     def test_obter_mais_copias(self):
+        estacao = Estacao(1,'DELL',4,512,'lab-8')
+        servidor = Servidor(2,'PC',512,4088,128,10000)
+        impressora = Impressora(20,'lASERjET HP',40)
         usuario = Usuario('mauro','123456')
-        impressora = Impressora(20,'Printer',40)
-        impressao = Impressao('arquivo1.txt',impressora, usuario,10)
-        impressao.copias |should| equal_to(10)
-#        impressao2 = Impressao('arquivo1.txt',impressora, usuario)
-#        impressao.copias |should| equal_to(11)
         
-        impressora.remover_impressao_fila()        
+        usuario.logar(estacao)
+        servidor.adicionar_impressora(impressora)
+        
+        impressao = Impressao('arquivo1.txt',impressora, usuario)
+       
+        (impressao._validar_valor_positivo,1) |should_not| throw(ValueError)
+        (impressao._validar_valor_positivo,0) |should| throw(ValueError)
+
+        impressao.copias |should| equal_to(1)
+        impressao.arquivo |should| equal_to('arquivo1.txt')
+        impressao.usuario |should| equal_to(usuario)
+
+        impressora.imprimir()
         usuario.apagar_usuario()
-        impressora.destruir_maquina()
+        impressora.destruir_maquina()      
+        estacao.destruir_maquina()        
+        servidor.destruir_maquina()
 
 
           

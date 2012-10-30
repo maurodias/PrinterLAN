@@ -4,12 +4,12 @@ from maquina import Maquina
 
 class Computador(Maquina):
     def __init__(self, codigo_patrimonio, descricao ,hd,memoria):
-        super(Computador,self).__init__(codigo_patrimonio, descricao)
         self._validar_valor(hd)
         self._hd = hd
         self._validar_valor(memoria)
         self._memoria = memoria
-  
+        super(Computador,self).__init__(codigo_patrimonio, descricao)
+          
     def alterar_hd(self,hd):
         self._validar_valor(hd)
         self._hd = hd

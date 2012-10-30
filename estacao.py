@@ -7,10 +7,10 @@ from computador import Computador
 class Estacao(Computador):
  
     def __init__(self, codigo_patrimonio, descricao ,hd,memoria,localizacao):
-        super(Estacao,self).__init__(codigo_patrimonio, descricao,hd,memoria)
         self._localizacao = localizacao
         self._usuario='Livre'
         self._datahora=None
+        super(Estacao,self).__init__(codigo_patrimonio, descricao,hd,memoria)
         
     def alterar_localizacao(self,localizacao):
         self._localizacao = localizacao

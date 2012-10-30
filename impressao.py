@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 from impressora import Impressora
-
+from usuario import Usuario
 class Impressao(object):
     impressoes = []
     def __init__(self, arquivo,impressora,usuario,copias=1):
@@ -33,21 +33,28 @@ class Impressao(object):
                
     def _validar_impressao(self,arquivo,impressora,usuario,copias):
         self._validar_valor_positivo(copias)
-        self._validar_se_impressora(impressora)
-        self._validar_se_existe(usuario,arquivo,copias)
+        self._validar_impressora(impressora)
+        self._validar_usuario(usuario)
+        self._verificar_nova(usuario,arquivo,copias)
             
-    def _validar_se_impressora(self,impressora):
-        if isinstance(impressora, Impressora):
-            if impressora.host != None:
-                raise ValueError
-        else:
+    def _validar_usuario(self,usuario):
+        if not isinstance(usuario, Usuario):
             raise ValueError
-                
+        elif usuario.atual_estacao == None:
+            raise ValueError    
+   
+    def _validar_impressora(self,impressora):
+        if not isinstance(impressora, Impressora):
+            raise ValueError
+        elif impressora.host == None:
+            raise ValueError    
+                   
+                    
     def _validar_valor_positivo(self, valor):
         if valor <= 0:
             raise ValueError
                 
-    def _validar_se_existe(self, usuario, arquivo,copias):
+    def _verificar_nova(self, usuario, arquivo,copias):
         for impressao in  Impressao.impressoes:
             if impressao.usuario == usuario and impressao.arquivo == arquivo:
                 impressao.copias+=copias

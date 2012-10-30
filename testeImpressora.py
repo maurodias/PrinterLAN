@@ -33,7 +33,6 @@ class testeImpressora(unittest.TestCase):
         (impressora.adicionar_host, server) |should| throw(ValueError)     
      
         impressora.remover_host()
-        impressora.host |should| equal_to(None)           
         
         impressora.destruir_maquina()
         server.destruir_maquina()
@@ -62,16 +61,7 @@ class testeImpressora(unittest.TestCase):
         impressora.host |should| equal_to(None)
        
         impressora.destruir_maquina()
-        
-        
-    def test_imprimir(self):
-        usuario = Usuario('mauro','123456')
-        impressora = Impressora(20,'Printer',40)
-        impressao = Impressao('arquivo1.txt',impressora, usuario,40)
-        impressora.imprimir()
-        usuario.apagar_usuario()
-        impressora.destruir_maquina()
-          
+
 if __name__ == "__main__":
     unittest.main()
 

@@ -20,7 +20,10 @@ class Usuario(object):
     def deslogar(self):
         if self.atual_estacao != None:
             self._atual_estacao.deslogar()
-            self._atual_estacao == None
+            self._atual_estacao = None
+        else:
+            print "Usuario nao logado"
+            raise ValueError
            
     def alterar_nome(self,nome):
         self._verificar_identidade(nome)
@@ -39,7 +42,8 @@ class Usuario(object):
         return self._atual_estacao
         
     def apagar_usuario(self):
-        self.deslogar()
+        if self._atual_estacao != None:
+            self.deslogar()
         Usuario.apagar(self)
     
     def listar_impressoes(self):
