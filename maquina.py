@@ -5,10 +5,10 @@ class Maquina(object):
     maquinas=[]
     def __init__(self, codigo_patrimonio, descricao ):
         self._verificar_identidade(codigo_patrimonio)
-        Maquina.armazenar(self)
         self._codigo_patrimonio = codigo_patrimonio
         self._descricao = descricao
-  
+        Maquina.armazenar(self)
+
     def alterar_codigo(self,codigo_patrimonio):
         self._verificar_identidade(codigo_patrimonio)
         self._codigo_patrimonio = codigo_patrimonio
@@ -32,6 +32,12 @@ class Maquina(object):
     def _validar_valor_positivo(self, valor):
         if valor <= 0:
             raise ValueError
+            
+    def verificar_se_estacao(self):
+        if isinstance(self, Estacao):
+            return True
+        else:
+            return False
             
     def destruir_maquina(self):
         Maquina.destruir(self)

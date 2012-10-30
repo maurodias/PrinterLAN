@@ -6,6 +6,8 @@ from should_dsl import should, should_not
 from maquina import Maquina
 from servidor import Servidor
 from impressora import Impressora
+from usuario import Usuario
+from impressao import Impressao
 
 class testeImpressora(unittest.TestCase):
 
@@ -59,6 +61,15 @@ class testeImpressora(unittest.TestCase):
 
         impressora.host |should| equal_to(None)
        
+        impressora.destruir_maquina()
+        
+        
+    def test_imprimir(self):
+        usuario = Usuario('mauro','123456')
+        impressora = Impressora(20,'Printer',40)
+        impressao = Impressao('arquivo1.txt',impressora, usuario,40)
+        impressora.imprimir()
+        usuario.apagar_usuario()
         impressora.destruir_maquina()
           
 if __name__ == "__main__":
