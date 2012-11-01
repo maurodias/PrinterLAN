@@ -5,13 +5,17 @@ from usuario import Usuario
 class Impressao(object):
     impressoes = []
     def __init__(self, arquivo,impressora,usuario,copias=1):
-        self._validar_impressao(arquivo,impressora,usuario,copias)
-        self._arquivo = arquivo
-        self._impressora = impressora
-        self._usuario = usuario
-        self._copias = copias
-        self._impressora.adicionar_impressao(self)
-        Impressao.armazenar(self)
+        if self._verificar_se_nova(usuario,arquivo,copias)==True:
+            self._validar_valor_positivo(copias)
+            self._validar_impressora(impressora)
+            self._validar_usuario(usuario)
+            self._arquivo = arquivo
+            self._impressora = impressora
+            self._usuario = usuario
+            self._copias = copias
+            self._impressora.adicionar_impressao(self)
+            Impressao.armazenar(self)
+        
 
     def obter_arquivo(self):
         return self._arquivo
@@ -31,12 +35,6 @@ class Impressao(object):
     def remover_impressao(self):
         Impressao.destruir(self)
                
-    def _validar_impressao(self,arquivo,impressora,usuario,copias):
-        self._validar_valor_positivo(copias)
-        self._validar_impressora(impressora)
-        self._validar_usuario(usuario)
-        self._verificar_nova(usuario,arquivo,copias)
-            
     def _validar_usuario(self,usuario):
         if not isinstance(usuario, Usuario):
             raise ValueError
@@ -54,11 +52,20 @@ class Impressao(object):
         if valor <= 0:
             raise ValueError
                 
-    def _verificar_nova(self, usuario, arquivo,copias):
-        for impressao in  Impressao.impressoes:
-            if impressao.usuario == usuario and impressao.arquivo == arquivo:
-                impressao.copias+=copias
-                raise ValueError
+    def _verificar_se_nova(self, usuario, arquivo,copias):
+        if Impressao.impressoes==[]:
+            return True
+        else:
+            for impressao in Impressao.impressoes:
+                if impressao.usuario == usuario and impressao.arquivo == arquivo:
+                    impressao._copias+=copias
+                    print self, impressao
+                    self = impressao
+                    print self, impressao
+                    return False
+                    
+                else:
+                    return True
 
 
                 
