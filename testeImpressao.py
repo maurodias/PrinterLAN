@@ -46,13 +46,13 @@ class testeImpressao(unittest.TestCase):
         servidor.adicionar_impressora(impressora)
         
         impressao = Impressao('arquivo1.txt',impressora, usuario)
-       
-        (impressao._validar_valor_positivo,1) |should_not| throw(ValueError)
-        (impressao._validar_valor_positivo,0) |should| throw(ValueError)
-
         impressao.copias |should| equal_to(1)
-        impressao.arquivo |should| equal_to('arquivo1.txt')
-        impressao.usuario |should| equal_to(usuario)
+        impressao2 =Impressao('arquivo1.txt',impressora, usuario,2)
+
+#        impressao |should| equal_to(impressao2)
+        impressao.copias |should| equal_to(3)
+        impressao2.copias |should| equal_to(3)
+        impressao |should| equal_to(impressao2)
 
         impressora.imprimir()
         usuario.apagar_usuario()
